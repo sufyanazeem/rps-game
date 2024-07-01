@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import rock from "./img/rock.png";
 import paper from "./img/paper.png";
 import scissors from "./img/scissors.png";
 import loading from "./img/loading.gif";
-
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -20,30 +19,27 @@ export default function Home() {
 
   function MyButton(props) {
     return (
-<button
-  type="button"
-  onClick={() => clicked(props.selected)}
-  className={`mx-auto w-40 border border-gray-200 rounded-lg shadow focus:outline-none dark:border-gray-700 ${
-    props.ready === false ? "" : "hover:bg-red-500 dark:hover:bg-red-700"
-  }`}
-  disabled={props.ready === false ? true : false}
-  style={{
-    backgroundColor: "transparent", // Make the background transparent
-    padding: "0.5rem", // Reduce padding
-  }}
->
-  <img
-    src={props.img}
-    className="w-16 mx-auto transform -scale-x-100"
-    alt="imgBtn"
-  />
-  <h5 className="mb-1 text-xl sm:text-sm font-bold tracking-tight text-white-900 dark:text-white">
-    {props.name}
-  </h5>
-</button>
-
-
-
+      <button
+        type="button"
+        onClick={() => clicked(props.selected)}
+        className={`mx-auto w-40 border border-gray-200 rounded-lg shadow focus:outline-none dark:border-gray-700 ${
+          !props.ready ? "" : "hover:bg-red-500 dark:hover:bg-red-700"
+        }`}
+        disabled={!props.ready}
+        style={{
+          backgroundColor: "transparent", // Make the background transparent
+          padding: "0.5rem", // Reduce padding
+        }}
+      >
+        <img
+          src={props.img}
+          className="w-16 mx-auto transform -scale-x-100"
+          alt="imgBtn"
+        />
+        <h5 className="mb-1 text-xl sm:text-sm font-bold tracking-tight text-white-900 dark:text-white">
+          {props.name}
+        </h5>
+      </button>
     );
   }
 
@@ -58,7 +54,7 @@ export default function Home() {
       setLoad(false);
       setSelected(name);
       let rand = getRandomInt(3);
-      if (rand != randNum) {
+      if (rand !== randNum) {
         setRandNum(rand);
         setCpuSelected(cpu[rand]);
       } else {
@@ -68,13 +64,12 @@ export default function Home() {
     }, 3500);
 
     setTimeout(function () {
-      setShowResult(showResult + 1);
+      setShowResult(prev => prev + 1);
     }, 3600);
-
   }
 
   function renderImg(selected, flip) {
-    if (selected == "Rock")
+    if (selected === "Rock")
       return (
         <img
           src={rock}
@@ -82,7 +77,7 @@ export default function Home() {
           alt="rock"
         />
       );
-    if (selected == "Paper")
+    if (selected === "Paper")
       return (
         <img
           src={paper}
@@ -90,7 +85,7 @@ export default function Home() {
           alt="paper"
         />
       );
-    if (selected == "Scissors")
+    if (selected === "Scissors")
       return (
         <img
           src={scissors}
@@ -98,37 +93,31 @@ export default function Home() {
           alt="scissors"
         />
       );
-    else
-      return (
-        <img
-          src={loading}
-          className="w-40 mx-auto"
-          priority
-          alt="loader"
-        />
-      );
+    return (
+      <img
+        src={loading}
+        className="w-40 mx-auto"
+        priority
+        alt="loader"
+      />
+    );
   }
 
   function ifReady(ready) {
-    if (ready == false) {
+    if (!ready) {
       return (
         <div
-        type="button"
-        className="mx-auto w-60 py-2 pb-4 cursor-pointer border border-red-600 border-1 rounded-lg hover:bg-red-600 hover:border-red-700 hover:text-white"
-        onClick={() => {
-          setReady(true);
-        }}
-      >
-        <h1 className="text-center lg:text-6xl font-bold tracking-tight text-white-900 dark:text-white">
-          READY
-        </h1>
-      </div>
-      
-      
-      
-      
+          type="button"
+          className="mx-auto w-60 py-2 pb-4 cursor-pointer border border-red-600 border-1 rounded-lg hover:bg-red-600 hover:border-red-700 hover:text-white"
+          onClick={() => {
+            setReady(true);
+          }}
+        >
+          <h1 className="text-center lg:text-6xl font-bold tracking-tight text-white-900 dark:text-white">
+            READY
+          </h1>
+        </div>
       );
-    } else {
     }
   }
 
@@ -142,28 +131,28 @@ export default function Home() {
 
   useEffect(() => {
     if (showResult > 0) {
-      if (selected != cpuSelected) {
-        if (selected == "Rock") {
-          if (cpuSelected == "Scissors") {
+      if (selected !== cpuSelected) {
+        if (selected === "Rock") {
+          if (cpuSelected === "Scissors") {
             alert('You Won!!')
           }
-          if (cpuSelected == "Paper") {
+          if (cpuSelected === "Paper") {
             alert('You Lost!!')
           }
         }
-        if (selected == "Paper") {
-          if (cpuSelected == "Scissors") {
+        if (selected === "Paper") {
+          if (cpuSelected === "Scissors") {
             alert('You Lost!!')
           }
-          if (cpuSelected == "Rock") {
+          if (cpuSelected === "Rock") {
             alert('You Won!!')
           }
         }
-        if (selected == "Scissors") {
-          if (cpuSelected == "Paper") {
+        if (selected === "Scissors") {
+          if (cpuSelected === "Paper") {
             alert('You Won!!')
           }
-          if (cpuSelected == "Rock") {
+          if (cpuSelected === "Rock") {
             alert('You Lost!!')
           }
         }
@@ -171,8 +160,7 @@ export default function Home() {
         alert('Draw!!')
       }
     }
-  }, [showResult])
-
+  }, [selected, cpuSelected, showResult]);
 
   function Arena(props) {
     if (load) {
@@ -224,45 +212,35 @@ export default function Home() {
           height: "100vh",
         }}
       >
-<div
-  className="mx-auto py-2 pb-4 cursor-pointer border border-red-600 border-1 rounded hover:border-red-700 hover:text-white"
-  onClick={() => {
-    setReady(true);
-  }}
->
-  <h1 className="text-center lg:text-6xl font-bold tracking-tight text-white-900 dark:text-white">
-    {ready == true ? "ROCK PAPER SCISSORS" : "CLICK READY TO PLAY"}
-  </h1>
-</div>
+        <div
+          className="mx-auto py-2 pb-4 cursor-pointer border border-red-600 border-1 rounded hover:border-red-700 hover:text-white"
+          onClick={() => {
+            setReady(true);
+          }}
+        >
+          <h1 className="text-center lg:text-6xl font-bold tracking-tight text-white-900 dark:text-white">
+            {ready ? "ROCK PAPER SCISSORS" : "CLICK READY TO PLAY"}
+          </h1>
+        </div>
 
-
-
-
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
+        <br />
+        <br />
+        <br />
+        <br />
         <div className="flex row my-10">
           <Arena selected={selected} cpuSelected={cpuSelected} load={load} />
         </div>
-<br></br>
-<br></br>
-<br></br>
+        <br />
+        <br />
+        <br />
         <div className="flex flex-row my-5">
           <MyButton selected={"Rock"} img={rock} name="ROCK" ready={ready} />
-
           <MyButton selected={"Paper"} img={paper} name="PAPER" ready={ready} />
-
-          <MyButton
-            selected={"Scissors"}
-            img={scissors}
-            name="SCISSORS"
-            ready={ready}
-          />
+          <MyButton selected={"Scissors"} img={scissors} name="SCISSORS" ready={ready} />
         </div>
-<br></br>
-<br></br>
-<br></br>
+        <br />
+        <br />
+        <br />
         {ifReady(ready)}
       </main>
     </>
