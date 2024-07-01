@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles.css */
+
+/* styles.css */
+
+/* Neon Gradient */
+.neon-gradient {
+    background: linear-gradient(135deg, #00fffc, #ff00e0);
+  }
+  
+  /* Glass Effect */
+  .glass-container {
+    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+    background: rgba(255, 255, 255, 0.15); /* Adjust the alpha (transparency) value as needed */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Adjust the border style as needed */
+    border-radius: 8px; /* Adjust the border radius as needed */
+  }
+  
